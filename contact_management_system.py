@@ -73,13 +73,22 @@ def display_contacts(contact_dict):
 def export_contacts(contact_dict):
     with open('contact_list.txt', 'w') as file:
         for contact, info in contact_dict.items():
-            file.write(f"{contact}: {info}")
+            file.write(f"{contact}: {info}, ")
             for item, details in info.items():
                 file.write(f"{item}: {details}")
         print("Contacts exported.")
 
 def import_contacts(contact_dict):
-    pass
+    with open('contact_list.txt', 'r') as file:
+        for line in file:
+            match = re.match(r'\s*([^:]+)\s*:\s*(.+)\s*', line)
+            if match:
+                contact, item = match.groups()
+                if ',' in item:
+                    contact_dict[contact] = item.split(',')
+                else:
+                    contact_dict[contact] = item
+    print(contact_dict)
 
 while True:
     print("Welcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Import contacts from a text file\n8. Quit")
@@ -108,6 +117,7 @@ while True:
     elif menu_select.lower() == 'quit':
         confirm = input("Are you sure you would like to quit the program? (type yes or no): ")
         if confirm.lower() == 'yes':
+            print("Have a nice day!")
             break
         else:
             continue
