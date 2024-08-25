@@ -59,10 +59,22 @@ def edit_contact(contact_dict):
     pass
 
 def delete_contact(contact_dict):
-    pass
+    contact = input('Please provide the name of the contact you wish to delete (type the name as it appears in the contact list): ')
+    try:
+        contact_dict.pop(contact)
+        print("Contact deleted.")
+    except KeyError:
+        print("Contact not found.")
 
 def search_contacts(contact_dict):
-    pass
+    contact = input("Please enter the full name of the contact you are trying to find as it appears in the contact list: ")
+    if contact in contact_dict:
+        for contact, details in contact_dict.items():
+            print(f"Contact: {contact}")
+            for category, info in details.items():
+                print(f"    {category}: {info}")
+    else:
+        print("Contact not found.\n")
 
 def display_contacts(contact_dict):
     for contact, details in contact_dict.items():
@@ -72,23 +84,14 @@ def display_contacts(contact_dict):
 
 def export_contacts(contact_dict):
     with open('contact_list.txt', 'w') as file:
-        for contact, info in contact_dict.items():
-            file.write(f"{contact}: {info}, ")
-            for item, details in info.items():
-                file.write(f"{item}: {details}")
-        print("Contacts exported.")
+        for contact, details in contact_dict.items():
+            file.write(f"Contact: {contact}")
+            for category, info in details.items():
+                file.write(f"    {category}: {info}")
+    print("\nContacts Exported!\n")
 
 def import_contacts(contact_dict):
-    with open('contact_list.txt', 'r') as file:
-        for line in file:
-            match = re.match(r'\s*([^:]+)\s*:\s*(.+)\s*', line)
-            if match:
-                contact, item = match.groups()
-                if ',' in item:
-                    contact_dict[contact] = item.split(',')
-                else:
-                    contact_dict[contact] = item
-    print(contact_dict)
+    pass
 
 while True:
     print("Welcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Import contacts from a text file\n8. Quit")
