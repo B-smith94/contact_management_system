@@ -1,12 +1,11 @@
 import re
-import os
 
 contact_details = {}
 
 def add_new_contact(contact_dict):
     first_name = input("Please enter the contact's first name: ")
     last_name = input("Please enter the contact's last name: ")
-    full_name = first_name + " " + last_name
+    full_name = first_name.capitalize() + " " + last_name.capitalize()
     while True:    
         home_or_cell = input(f"Please enter {full_name}'s phone home or phone number (ex: 123-456-7890): ")
         phone_format = re.search(r"\d{3}-\d{3}-\d{4}", home_or_cell)
@@ -52,16 +51,42 @@ def add_new_contact(contact_dict):
             else:
                 print("Invalid format, please use this format: 123-456-7890")
                 continue
-    contact_dict[full_name] = {'Name': full_name, 'Home/Cell': home_or_cell, 'Email Address': email, 'Home Address': address, 'Work Phone Number': work_phone}
+    contact_dict[full_name] = {'Name': full_name, 'Home/Cell': home_or_cell, 'Email': email, 'Home Address': address, 'Work Phone Number': work_phone}
     print("Contact successfully added!")
+    while True:
+        add_more_detail = input("Would you like to add any other details? (yes/no): ")
+        if add_more_detail.lower() == 'yes':
+            new_category = input("Please enter the category you wish to add (ex: birthday): ")
+            new_info = input(f"Please enter the information for {new_category}: ")
+            contact_dict[full_name][new_category.title()] = [new_info]
+            continue
+        elif add_more_detail.lower()!= 'yes':
+            if add_more_detail.lower() == 'no':
+                break
+            else:
+                print("Invalid input, please try again")
+                continue
 
 def edit_contact(contact_dict):
-    pass
-
+    contact = input("Please input the full name of the contact you wish to edit: ")
+    if contact.title() in contact_dict:
+        while True:
+            category = input("Please input the info category you wish to change ('Name', 'Home/Cell', 'Email', 'Home Address', or 'Work Phone') ")
+            if category.title() in contact_dict[contact.title()]:
+                new_info = input("Please input the updated info: ")
+                contact_dict[contact.title()][category.title()] = new_info
+                break
+            else:
+                print("Category not found, please try again.")
+                continue
+        print("Contact successfully edited!")
+    else:
+        print("Contact not found.")
+            
 def delete_contact(contact_dict):
     contact = input('Please provide the name of the contact you wish to delete (type the name as it appears in the contact list): ')
     try:
-        contact_dict.pop(contact)
+        contact_dict.pop(contact_dict[contact])
         print("Contact deleted.")
     except KeyError:
         print("Contact not found.")
@@ -69,10 +94,7 @@ def delete_contact(contact_dict):
 def search_contacts(contact_dict):
     contact = input("Please enter the full name of the contact you are trying to find as it appears in the contact list: ")
     if contact in contact_dict:
-        for contact, details in contact_dict.items():
-            print(f"Contact: {contact}")
-            for category, info in details.items():
-                print(f"    {category}: {info}")
+        print(f"\nContact: {contact_dict[contact]}")
     else:
         print("Contact not found.\n")
 
@@ -85,16 +107,17 @@ def display_contacts(contact_dict):
 def export_contacts(contact_dict):
     with open('contact_list.txt', 'w') as file:
         for contact, details in contact_dict.items():
-            file.write(f"Contact: {contact}")
+            file.write(f"{contact}:\n")
             for category, info in details.items():
-                file.write(f"    {category}: {info}")
-    print("\nContacts Exported!\n")
+                file.write(f"   {category}: {info}\n")
+    print("\nContacts Exported!")
 
 def import_contacts(contact_dict):
-    pass
-
+    with open("contact_list.txt", "r") as file:
+        pass
+            
 while True:
-    print("Welcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Import contacts from a text file\n8. Quit")
+    print("\nWelcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Import contacts from a text file\n8. Quit")
     menu_select = input("\nPlease enter the task you wish to perform from the menu list (example: Add a new contact): ")
     if menu_select.lower() == 'add a new contact':
         add_new_contact(contact_details)
