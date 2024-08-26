@@ -58,7 +58,7 @@ def add_new_contact(contact_dict):
         if add_more_detail.lower() == 'yes':
             new_category = input("Please enter the category you wish to add (ex: birthday): ")
             new_info = input(f"Please enter the information for {new_category}: ")
-            contact_dict[full_name][new_category.title()] = [new_info]
+            contact_dict[full_name][new_category.title()] = new_info
             continue
         elif add_more_detail.lower()!= 'yes':
             if add_more_detail.lower() == 'no':
@@ -70,15 +70,9 @@ def add_new_contact(contact_dict):
 def edit_contact(contact_dict):
     contact = input("Please input the full name of the contact you wish to edit: ")
     if contact.title() in contact_dict:
-        while True:
-            category = input("Please input the info category you wish to change ('Name', 'Home/Cell', 'Email', 'Home Address', or 'Work Phone') ")
-            if category.title() in contact_dict[contact.title()]:
-                new_info = input("Please input the updated info: ")
-                contact_dict[contact.title()][category.title()] = new_info
-                break
-            else:
-                print("Category not found, please try again.")
-                continue
+        category = input("Please input the info category you wish to change ('Name', 'Home/Cell', 'Email', 'Home Address', or 'Work Phone') ")
+        new_info = input("Please input the updated info: ")
+        contact_dict[contact.title()][category.title()] = new_info
         print("Contact successfully edited!")
     else:
         print("Contact not found.")
