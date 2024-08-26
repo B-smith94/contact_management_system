@@ -51,7 +51,7 @@ def add_new_contact(contact_dict):
             else:
                 print("Invalid format, please use this format: 123-456-7890")
                 continue
-    contact_dict[full_name] = {'Name': full_name, 'Home/Cell': home_or_cell, 'Email': email, 'Home Address': address, 'Work Phone Number': work_phone}
+    contact_dict[full_name] = {'Name': full_name, 'Home/Cell': home_or_cell, 'Email': email, 'Home Address': address, 'Work Phone': work_phone}
     print("Contact successfully added!")
     while True:
         add_more_detail = input("Would you like to add any other details? (yes/no): ")
@@ -70,7 +70,7 @@ def add_new_contact(contact_dict):
 def edit_contact(contact_dict):
     contact = input("Please input the full name of the contact you wish to edit: ")
     if contact.title() in contact_dict:
-        category = input("Please input the info category you wish to change ('Name', 'Home/Cell', 'Email', 'Home Address', or 'Work Phone') ")
+        category = input("Please input the info category you wish to change (example: Name) ")
         new_info = input("Please input the updated info: ")
         contact_dict[contact.title()][category.title()] = new_info
         print("Contact successfully edited!")
@@ -80,7 +80,7 @@ def edit_contact(contact_dict):
 def delete_contact(contact_dict):
     contact = input('Please provide the name of the contact you wish to delete (type the name as it appears in the contact list): ')
     try:
-        contact_dict.pop(contact_dict[contact])
+        contact_dict.pop(contact_dict[contact.title()])
         print("Contact deleted.")
     except KeyError:
         print("Contact not found.")
@@ -106,12 +106,13 @@ def export_contacts(contact_dict):
                 file.write(f"   {category}: {info}\n")
     print("\nContacts Exported!")
 
-def import_contacts(contact_dict):
-    with open("contact_list.txt", "r") as file:
-        pass
+def sort_contacts(contact_dict):
+    category = input("Please enter how you would like the contacts sorted (Name, Phone, Email, Address, Work Phone Number, or any added categories): ")
+    sorted_contacts = sorted(contact_dict, key=lambda x: x[1][category])
+    print(sorted_contacts)
             
 while True:
-    print("\nWelcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Import contacts from a text file\n8. Quit")
+    print("\nWelcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Sort Contacts\n8. Quit")
     menu_select = input("\nPlease enter the task you wish to perform from the menu list (example: Add a new contact): ")
     if menu_select.lower() == 'add a new contact':
         add_new_contact(contact_details)
@@ -131,8 +132,8 @@ while True:
     elif menu_select.lower() == 'export contacts to a text file':
         export_contacts(contact_details)
         continue
-    elif menu_select.lower() == 'import contacts from a text file':
-        import_contacts(contact_details)
+    elif menu_select.lower() == 'sort contacts':
+        sort_contacts(contact_details)
         continue
     elif menu_select.lower() == 'quit':
         confirm = input("Are you sure you would like to quit the program? (type yes or no): ")
