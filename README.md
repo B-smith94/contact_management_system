@@ -91,9 +91,50 @@ This is where you put in the edited information.  For example, if you selected "
 
 ### 4. How to Delete a Contact ###
 
+To delete a contact, enter "delete a contact" when prompted:
+
+        Please enter the task you wish to perform from the menu list (example: Add a new contact): delete a contact|
+
+The program will then ask you to provide the name of the contact you wish to delete. The program is not case sensitive, but you must enter the name as it appears in the contact list, or the program will not be able to find the contact to delete.
+
+        Please provide the name of the contact you wish to delete (type the name as it appears in the contact list): |
+
+If you enter the name of the contact incorrectly, or the contact is not listed in the contact list, then the program will displya "Contact not found." and return to the menu. Otherwise, the program will display "Contact deleted." when the contact is successfully found and removed. 
 
 ### 5. How to Search for a Contact ###
 
+To search for a contact, enter "search for a contact" when prompted:
+
+        Please enter the task you wish to perform from the menu list (example: Add a new contact): search for a contact|
+
+The program will then ask for you to enter the name of the contact you are searching for. As before, the program is not case sensitive, but you must enter the name as it appears in the contact list. If the program is able to find the contact you input, then it will display the contact information in the following manner:
+
+        Contact: {'Name': 'Example Man', 'Home/Cell': '123-456-7890', 'Email': 'example.man@example.com', 'Home Address': '123 Example Dr. Example City, State',          'Work Phone': '987-654-3210', 'Birthday': '01/01/11'}
+
+If the program cannot find the contact in the list, either because they are not in the list or because the name was entered incorrectly, the program will display "Contact not found." Whether or not the program finds the contact, it will return to the main menu after searching.
+
 ### 6. How to Display All Contacts ###
 
+To display all contacts, enter "display all contacts when prompted:
+
+        Please enter the task you wish to perform from the menu list (example: Add a new contact): display all contacts |
+
+Once you do, the program will display a list of all the contacts currently in the contact list in the following format:
+
+        Contact: Example Man
+            Name: Example Man
+            Home/Cell: 123-456-7890
+            Email: example.man@example.com
+            Home Address: 123 Example Dr. Example City, State
+            Work Phone: 987-654-3210
+            Extra Categories: Information You Add
+
+Afterwards, the program will return to the main menu.
+
 ### 7. How to Export Contacts to a Text File ###
+
+In order to export your contacts to a text file, enter "export contacts to a text file" when prompted:
+
+        Please enter the task you wish to perform from the menu list (example: Add a new contact): export contacts to a text file|
+
+The program will then export your contacts to a file titled "contact_list.txt". If there isn't a file with that name yet within the program's directory, it will create one by that name. If there is, it will overwrite whatever information is in the text file with whatever is on your current list. The program will then display "Contacts Exported!" and return to the main menu.
