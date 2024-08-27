@@ -105,14 +105,9 @@ def export_contacts(contact_dict):
             for category, info in details.items():
                 file.write(f"   {category}: {info}\n")
     print("\nContacts Exported!")
-
-def sort_contacts(contact_dict):
-    category = input("Please enter how you would like the contacts sorted (Name, Phone, Email, Address, Work Phone Number, or any added categories): ")
-    sorted_contacts = sorted(contact_dict, key=lambda x: x[1][category])
-    print(sorted_contacts)
             
 while True:
-    print("\nWelcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Sort Contacts\n8. Quit")
+    print("\nWelcome to the Contact Management System!\nMenu:\n1. Add a new contact\n2. Edit an existing contact\n3. Delete a contact\n4. Search for a contact\n5. Display all contacts\n6. Export contacts to a text file\n7. Quit")
     menu_select = input("\nPlease enter the task you wish to perform from the menu list (example: Add a new contact): ")
     if menu_select.lower() == 'add a new contact':
         add_new_contact(contact_details)
@@ -131,9 +126,6 @@ while True:
         continue
     elif menu_select.lower() == 'export contacts to a text file':
         export_contacts(contact_details)
-        continue
-    elif menu_select.lower() == 'sort contacts':
-        sort_contacts(contact_details)
         continue
     elif menu_select.lower() == 'quit':
         confirm = input("Are you sure you would like to quit the program? (type yes or no): ")
